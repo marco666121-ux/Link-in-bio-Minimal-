@@ -1,0 +1,1182 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hanii.mohd</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --bg-color: #000000;
+            --text-color: #ffffff;
+            --card-bg: #000000;
+            --border-color: #262626;
+            --hover-bg: #ffffff;
+            --hover-text: #000000;
+            --card-radius: 8px;
+            --card-gap: 10px;
+            --card-pad-y: 14px;
+        }
+        body.inverted {
+            --bg-color: #ffffff;
+            --text-color: #000000;
+            --card-bg: #ffffff;
+            --border-color: #e5e5e5;
+            --hover-bg: #000000;
+            --hover-text: #ffffff;
+        }
+        #publicView {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .custom-border { border: 1px solid var(--border-color); }
+        .custom-border-b { border-bottom: 1px solid var(--border-color); }
+        .custom-border-t { border-top: 1px solid var(--border-color); }
+        .links-stack { display: flex; flex-direction: column; gap: var(--card-gap); }
+        .link-card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding-top: var(--card-pad-y);
+            padding-bottom: var(--card-pad-y);
+        }
+        .link-card:hover {
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            border-color: var(--hover-bg);
+        }
+        /* Custom sleek scrollbars */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: rgba(150, 150, 150, 0.3); border-radius: 9999px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(150, 150, 150, 0.5); }
+        input[type="color"] { -webkit-appearance: none; border: none; padding: 0; }
+        input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+        input[type="color"]::-webkit-color-swatch { border: none; border-radius: 6px; }
+    </style>
+</head>
+<body class="min-h-screen antialiased overflow-x-hidden">
+
+    <!-- SAVED TOAST NOTIFICATION -->
+    <div id="saveToast" class="fixed bottom-5 right-5 z-[60] hidden items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 text-black font-sans text-xs font-semibold shadow-2xl transition-all">
+        <i class="ph-bold ph-check-circle text-base"></i>
+        <span id="saveToastText">Saved to Neon & Updated Live Site!</span>
+    </div>
+
+    <!-- PUBLIC LINK-IN-BIO VIEW -->
+    <div id="publicView" class="min-h-screen w-full">
+        <main class="max-w-md mx-auto px-5 py-8">
+            
+            <!-- Minimal Header -->
+            <header class="flex items-center justify-between pb-5 mb-4 custom-border-b">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 id="pubHeaderTitle" class="font-semibold text-lg tracking-tight">hanii.mohd</h1>
+                    </div>
+                    <p id="pubBioText" class="text-xs opacity-60 mt-0.5 hidden"></p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <!-- Subtle B&W Invert Toggle -->
+                    <button id="pubThemeToggleBtn" onclick="togglePublicInvert()" aria-label="Toggle Invert" class="w-8 h-8 flex items-center justify-center rounded-full custom-border opacity-70 hover:opacity-100 transition">
+                        <i class="ph ph-circle-half text-lg"></i>
+                    </button>
+                    <!-- Settings / Studio Editor Button (PIN: 2689) -->
+                    <button onclick="openPinModal()" aria-label="Settings" title="Open Studio Editor (PIN: 2689)" class="w-8 h-8 flex items-center justify-center rounded-full custom-border opacity-70 hover:opacity-100 transition">
+                        <i class="ph ph-gear text-lg"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Clean Spaced Link Stack -->
+            <nav id="pubLinksList" class="links-stack">
+                <!-- Populated via JS -->
+            </nav>
+
+            <!-- Minimal Instagram Footer -->
+            <footer id="pubFooter" class="mt-6 pt-5 custom-border-t">
+                <a 
+                    id="pubInstaLink"
+                    href="https://instagram.com/hanii.mohd" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="link-card group flex items-center justify-between px-4 transition-all duration-150"
+                >
+                    <div class="flex items-center gap-3">
+                        <i class="ph ph-instagram-logo text-lg opacity-60 group-hover:opacity-100"></i>
+                        <span id="pubInstaLabel" class="font-medium text-sm tracking-tight">@hanii.mohd</span>
+                    </div>
+                    <i id="pubInstaArrow" class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
+                </a>
+            </footer>
+
+        </main>
+    </div>
+
+    <!-- PIN MODAL (PIN: 2689) -->
+    <div id="pinModal" class="fixed inset-0 z-40 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 font-sans">
+        <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-xs p-5 text-center space-y-4 shadow-2xl text-white">
+            <div class="w-10 h-10 mx-auto rounded-xl bg-neutral-800 border border-neutral-700 flex items-center justify-center text-lg text-white">
+                <i class="ph-bold ph-lock-key"></i>
+            </div>
+            <div>
+                <h3 class="text-sm font-semibold">Enter Studio PIN</h3>
+                <p class="text-xs text-neutral-400 mt-0.5">Protected access to Link-in-Bio Studio</p>
+            </div>
+            <input 
+                type="password" 
+                id="pinInput" 
+                maxlength="4" 
+                inputmode="numeric"
+                placeholder="••••" 
+                onkeydown="if(event.key==='Enter') verifyPin()"
+                class="w-full text-center tracking-[0.5em] text-lg py-2.5 rounded-xl bg-neutral-950 border border-neutral-800 focus:outline-none focus:border-white font-mono text-white"
+            >
+            <p id="pinError" class="text-xs text-red-400 hidden">Incorrect PIN. Try again.</p>
+            <div class="flex gap-2">
+                <button onclick="closePinModal()" class="flex-1 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-xs font-medium text-neutral-300 transition">Cancel</button>
+                <button onclick="verifyPin()" class="flex-1 py-2 rounded-xl bg-white hover:bg-neutral-200 text-black text-xs font-semibold transition">Unlock</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EXACT STUDIO EDITOR OVERLAY -->
+    <div id="studioEditorOverlay" class="fixed inset-0 z-50 hidden bg-neutral-950 text-neutral-100 font-sans h-screen flex flex-col overflow-hidden select-none">
+
+        <header class="h-14 shrink-0 border-b border-neutral-800 bg-neutral-900/80 backdrop-blur px-4 flex items-center justify-between z-20">
+            <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-white text-black flex items-center justify-center font-bold text-sm">
+                    H
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <h1 class="text-sm font-semibold tracking-tight leading-none">Link-in-Bio Studio</h1>
+                        <span id="neonConnBadge" class="text-[10px] font-mono px-1.5 py-0.5 rounded bg-neutral-800 text-neutral-400">Neon DB</span>
+                    </div>
+                    <p class="text-[11px] text-neutral-400 leading-none mt-1">Edit links, colors & click Save to update live site</p>
+                </div>
+            </div>
+
+            <!-- Mobile View Switcher (Editor vs Preview) -->
+            <div class="flex lg:hidden bg-neutral-800 p-0.5 rounded-lg border border-neutral-700">
+                <button id="mobTabEdit" onclick="setMobileView('edit')" class="px-2.5 py-1 rounded-md text-xs font-medium bg-white text-black transition">
+                    Edit
+                </button>
+                <button id="mobTabPreview" onclick="setMobileView('preview')" class="px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition">
+                    Preview
+                </button>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="openImportModal()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-neutral-800 hover:bg-neutral-700 text-neutral-200 border border-neutral-700 transition">
+                    <i class="ph ph-list-plus text-sm"></i>
+                    <span>Bulk Add URLs</span>
+                </button>
+                <button id="saveAndApplyBtn" onclick="saveAndApplyToSite()" class="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-semibold bg-emerald-500 hover:bg-emerald-400 text-black shadow-lg shadow-emerald-500/10 transition active:scale-95">
+                    <i class="ph-bold ph-check-circle text-sm"></i>
+                    <span id="saveBtnLabel">Save</span>
+                </button>
+                <button onclick="cancelStudioChanges()" title="Close without saving" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium bg-neutral-800 hover:bg-neutral-700 text-neutral-300 border border-neutral-700 transition">
+                    <i class="ph ph-x text-sm"></i>
+                </button>
+            </div>
+        </header>
+
+        <div class="flex-1 flex overflow-hidden relative">
+
+            <!-- LEFT PANE: VISUAL EDITOR CONTROLS -->
+            <aside id="editorPane" class="w-full lg:w-[460px] xl:w-[500px] shrink-0 border-r border-neutral-800 bg-neutral-900/40 flex flex-col h-full overflow-hidden">
+                
+                <!-- Editor Category Tabs -->
+                <div class="flex border-b border-neutral-800 bg-neutral-900/60 px-3 pt-2 gap-1 shrink-0">
+                    <button onclick="switchEditorTab('links')" id="tabBtn-links" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium border-b-2 border-white text-white transition">
+                        <i class="ph ph-link text-sm"></i>
+                        <span>Links (<span id="linkCountBadge">16</span>)</span>
+                    </button>
+                    <button onclick="switchEditorTab('text')" id="tabBtn-text" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium border-b-2 border-transparent text-neutral-400 hover:text-neutral-200 transition">
+                        <i class="ph ph-text-aa text-sm"></i>
+                        <span>Header & Insta</span>
+                    </button>
+                    <button onclick="switchEditorTab('style')" id="tabBtn-style" class="flex items-center gap-1.5 px-3.5 py-2 text-xs font-medium border-b-2 border-transparent text-neutral-400 hover:text-neutral-200 transition">
+                        <i class="ph ph-palette text-sm"></i>
+                        <span>Colors & Style</span>
+                    </button>
+                </div>
+
+                <!-- TAB 1: LINKS MANAGER -->
+                <div id="tabPanel-links" class="flex-1 overflow-y-auto p-4 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <p class="text-xs text-neutral-400">Edit titles, URLs, reorder or add new links.</p>
+                        <div class="flex items-center gap-1.5">
+                            <button onclick="openImportModal()" class="sm:hidden px-2.5 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 text-xs font-medium border border-neutral-700">
+                                Bulk Add
+                            </button>
+                            <button onclick="addNewLink()" class="flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-white text-black hover:bg-neutral-200 text-xs font-semibold transition">
+                                <i class="ph-bold ph-plus"></i>
+                                <span>Add Link</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Links Editor List -->
+                    <div id="linksEditorContainer" class="space-y-2.5 pb-10">
+                        <!-- Populated via JS -->
+                    </div>
+                </div>
+
+                <!-- TAB 2: TEXT & FOOTER SETTINGS -->
+                <div id="tabPanel-text" class="hidden flex-1 overflow-y-auto p-4 space-y-5">
+                    <!-- Header Section -->
+                    <div class="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Header & Profile</h3>
+                            <label class="flex items-center gap-2 text-xs text-neutral-300 cursor-pointer">
+                                <input type="checkbox" id="inpShowThemeToggle" onchange="updateConfigFromInputs()" class="rounded accent-white">
+                                <span>Show Invert Button</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-neutral-400 mb-1">Header Title / Handle</label>
+                            <input type="text" id="inpHeaderTitle" oninput="updateConfigFromInputs()" class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-sm text-white focus:outline-none focus:border-neutral-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-neutral-400 mb-1">Optional Subtitle / Bio (leave blank for none)</label>
+                            <input type="text" id="inpBioText" placeholder="e.g., Projects & Experiments" oninput="updateConfigFromInputs()" class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-sm text-white focus:outline-none focus:border-neutral-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-neutral-400 mb-1">Browser Tab Title</label>
+                            <input type="text" id="inpPageTitle" oninput="updateConfigFromInputs()" class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-sm text-white focus:outline-none focus:border-neutral-500">
+                        </div>
+                    </div>
+
+                    <!-- Instagram / Bottom Footer Section -->
+                    <div class="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Bottom Instagram Button</h3>
+                            <label class="flex items-center gap-2 text-xs text-neutral-300 cursor-pointer">
+                                <input type="checkbox" id="inpShowInsta" onchange="updateConfigFromInputs()" class="rounded accent-white">
+                                <span>Show Footer</span>
+                            </label>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-neutral-400 mb-1">Display Label</label>
+                            <input type="text" id="inpInstaLabel" oninput="updateConfigFromInputs()" class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-sm text-white focus:outline-none focus:border-neutral-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-neutral-400 mb-1">Instagram / Social URL</label>
+                            <input type="url" id="inpInstaUrl" oninput="updateConfigFromInputs()" class="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-sm text-white font-mono focus:outline-none focus:border-neutral-500">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: COLORS & LAYOUT STYLE -->
+                <div id="tabPanel-style" class="hidden flex-1 overflow-y-auto p-4 space-y-5">
+                    
+                    <!-- Quick Color Presets -->
+                    <div class="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-3">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Quick Color Themes</h3>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button onclick="applyColorPreset('pureDark')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-black border border-white shrink-0"></span>
+                                <span class="text-xs font-medium">Pure B&W Dark</span>
+                            </button>
+                            <button onclick="applyColorPreset('pureLight')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-white border border-black shrink-0"></span>
+                                <span class="text-xs font-medium">Pure B&W Light</span>
+                            </button>
+                            <button onclick="applyColorPreset('emeraldNight')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-zinc-950 border-2 border-emerald-400 shrink-0"></span>
+                                <span class="text-xs font-medium">Cyber Emerald</span>
+                            </button>
+                            <button onclick="applyColorPreset('warmCream')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-[#f7f4ef] border-2 border-[#1c1917] shrink-0"></span>
+                                <span class="text-xs font-medium">Warm Cream</span>
+                            </button>
+                            <button onclick="applyColorPreset('midnightBlue')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-[#090d16] border-2 border-[#38bdf8] shrink-0"></span>
+                                <span class="text-xs font-medium">Midnight Sky</span>
+                            </button>
+                            <button onclick="applyColorPreset('roseNoir')" class="flex items-center gap-2.5 p-2 rounded-lg bg-neutral-950 border border-neutral-800 hover:border-neutral-600 text-left transition">
+                                <span class="w-5 h-5 rounded-full bg-[#12090d] border-2 border-[#fb7185] shrink-0"></span>
+                                <span class="text-xs font-medium">Rose Noir</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Custom Color Pickers -->
+                    <div class="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-3">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Custom Colors</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Page Background</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpBgColor" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtBgColor" oninput="syncColorText('BgColor')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Text Color</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpTextColor" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtTextColor" oninput="syncColorText('TextColor')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Card Background</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpCardBg" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtCardBg" oninput="syncColorText('CardBg')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Border Color</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpBorderColor" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtBorderColor" oninput="syncColorText('BorderColor')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Hover Fill Color</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpHoverBg" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtHoverBg" oninput="syncColorText('HoverBg')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-[11px] text-neutral-400 mb-1">Hover Text Color</label>
+                                <div class="flex items-center gap-2 bg-neutral-950 p-1.5 rounded-lg border border-neutral-800">
+                                    <input type="color" id="inpHoverText" oninput="updateConfigFromInputs()" class="w-6 h-6 rounded cursor-pointer">
+                                    <input type="text" id="txtHoverText" oninput="syncColorText('HoverText')" class="w-full bg-transparent text-xs font-mono uppercase focus:outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Spacing, Numbers & Radius -->
+                    <div class="p-3.5 rounded-xl bg-neutral-900 border border-neutral-800 space-y-3.5">
+                        <h3 class="text-xs font-semibold uppercase tracking-wider text-neutral-400">Layout & Button Feel</h3>
+                        
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-neutral-300">Show Link Numbers (01, 02...)</span>
+                            <input type="checkbox" id="inpShowNumbers" onchange="updateConfigFromInputs()" class="rounded accent-white">
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-neutral-300">Show Arrow Icon</span>
+                            <input type="checkbox" id="inpShowArrows" onchange="updateConfigFromInputs()" class="rounded accent-white">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-neutral-400">Corner Roundness</span>
+                                <span id="lblRadius" class="font-mono text-neutral-300">8px</span>
+                            </div>
+                            <input type="range" id="inpRadius" min="0" max="24" step="2" oninput="updateConfigFromInputs()" class="w-full accent-white">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-neutral-400">Gap Between Links</span>
+                                <span id="lblGap" class="font-mono text-neutral-300">10px</span>
+                            </div>
+                            <input type="range" id="inpGap" min="0" max="20" step="2" oninput="updateConfigFromInputs()" class="w-full accent-white">
+                        </div>
+
+                        <div>
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-neutral-400">Button Vertical Padding</span>
+                                <span id="lblPadY" class="font-mono text-neutral-300">14px</span>
+                            </div>
+                            <input type="range" id="inpPadY" min="8" max="22" step="2" oninput="updateConfigFromInputs()" class="w-full accent-white">
+                        </div>
+                    </div>
+                </div>
+
+            </aside>
+
+            <!-- RIGHT PANE: LIVE INTERACTIVE PREVIEW -->
+            <main id="previewPane" class="hidden lg:flex flex-1 flex-col bg-neutral-950 items-center justify-center p-4 lg:p-6 overflow-hidden relative">
+                
+                <!-- Preview Toolbar -->
+                <div class="flex items-center justify-between w-full max-w-md mb-3 px-1">
+                    <div class="flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span class="text-xs font-medium text-neutral-400">Live Interactive Preview</span>
+                    </div>
+                    <div class="flex items-center gap-1 bg-neutral-900 border border-neutral-800 rounded-lg p-0.5">
+                        <button onclick="setPreviewWidth('mobile')" id="btnWidthMobile" class="px-2.5 py-1 rounded-md text-xs font-medium bg-neutral-800 text-white transition">
+                            <i class="ph ph-device-mobile"></i> Mobile
+                        </button>
+                        <button onclick="setPreviewWidth('full')" id="btnWidthFull" class="px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition">
+                            <i class="ph ph-corners-out"></i> Full
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Live Iframe Container -->
+                <div id="previewFrameWrapper" class="w-full max-w-[410px] h-full rounded-2xl border-4 border-neutral-800 shadow-2xl overflow-hidden bg-black transition-all duration-200">
+                    <iframe id="livePreviewFrame" title="Live Link in Bio Preview" class="w-full h-full border-0"></iframe>
+                </div>
+            </main>
+        </div>
+
+        <!-- MODAL: BULK IMPORT URLS -->
+        <div id="importModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+            <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-lg flex flex-col shadow-2xl overflow-hidden">
+                <div class="px-5 py-4 border-b border-neutral-800 flex items-center justify-between">
+                    <div>
+                        <h2 class="text-sm font-semibold text-white">Bulk Add Links</h2>
+                        <p class="text-xs text-neutral-400">Paste one URL per line (or `Title | https://...`)</p>
+                    </div>
+                    <button onclick="closeImportModal()" class="w-8 h-8 rounded-lg bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white flex items-center justify-center">
+                        <i class="ph ph-x text-base"></i>
+                    </button>
+                </div>
+                <div class="p-4 space-y-3">
+                    <textarea id="bulkUrlsInput" rows="7" placeholder="https://example.com&#10;My Cool App | https://cool-app.vercel.app" class="w-full p-3 rounded-xl bg-neutral-950 border border-neutral-800 text-white font-mono text-xs focus:outline-none focus:border-neutral-600"></textarea>
+                    <div class="flex items-center justify-end gap-2">
+                        <button onclick="closeImportModal()" class="px-3 py-1.5 rounded-lg bg-neutral-800 text-neutral-300 text-xs font-medium">Cancel</button>
+                        <button onclick="processBulkImport()" class="px-4 py-1.5 rounded-lg bg-white text-black text-xs font-semibold hover:bg-neutral-200">Add Links</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        const STORAGE_KEY = 'hani_studio_state_v1';
+        const NEON_DATABASE_URL = 'postgresql://neondb_owner:npg_X5KcSygU7sFQ@ep-mute-shape-b5hnmygz-pooler.c-7.us-east-2.aws.neon.tech/neondb?sslmode=require';
+
+        // Default state pre-loaded with Hani's exact 16 links & minimalist B&W styling
+        const defaultState = {
+            pageTitle: 'hanii.mohd',
+            headerTitle: 'hanii.mohd',
+            bioText: '',
+            showThemeToggle: true,
+            showInsta: true,
+            instaLabel: '@hanii.mohd',
+            instaUrl: 'https://instagram.com/hanii.mohd',
+            bgColor: '#000000',
+            textColor: '#ffffff',
+            cardBg: '#000000',
+            borderColor: '#262626',
+            hoverBg: '#ffffff',
+            hoverText: '#000000',
+            showNumbers: true,
+            showArrows: true,
+            radius: 8,
+            gap: 10,
+            padY: 14,
+            links: [
+                { title: 'Paisa Tha', url: 'https://paisa-tha.lovable.app/' },
+                { title: 'Traitors', url: 'https://traitors-625779343117.asia-southeast1.run.app/' },
+                { title: 'Quick Copy Bot', url: 'https://quick-copy-bot.vercel.app/' },
+                { title: 'Fake or Fact', url: 'https://fake-or-fact-by-hani.edgeone.app/' },
+                { title: 'SpyGame', url: 'https://spygame.edgeone.dev/' },
+                { title: 'Hani Bingo', url: 'https://hanibingo.vercel.app/' },
+                { title: 'KP by Hanii', url: 'https://kpbyhanii.edgeone.app/' },
+                { title: 'TimeRush', url: 'https://timerush.lovable.app/' },
+                { title: 'Sing It Back', url: 'https://sing-it-back-hani.vercel.app/' },
+                { title: 'SMMFlixx', url: 'https://smmflixx.vercel.app/' },
+                { title: 'SMMFlix', url: 'https://smmflix.vercel.app/' },
+                { title: '10th IT AI', url: 'https://10th-it-ai.vercel.app/' },
+                { title: '10N Students', url: 'https://10n-students.vercel.app/' },
+                { title: 'MorseBox', url: 'https://morsebox.vercel.app/' },
+                { title: 'Code-N-View', url: 'https://code-n-view.vercel.app/' },
+                { title: 'NeuroPrimer', url: 'https://neuroprimer.vercel.app/' }
+            ]
+        };
+
+        let state = loadSavedState();
+        let backupStateBeforeEdit = null;
+
+        function loadSavedState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    return Object.assign({}, defaultState, JSON.parse(raw));
+                }
+            } catch (e) {
+                console.warn('Could not read saved state:', e);
+            }
+            return JSON.parse(JSON.stringify(defaultState));
+        }
+
+        function saveToLocalStorage() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+            } catch (e) {
+                console.warn('Could not persist state locally:', e);
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('saveToast');
+            document.getElementById('saveToastText').textContent = message;
+            toast.classList.remove('hidden');
+            toast.classList.add('flex');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('flex');
+            }, 2800);
+        }
+
+        // Escape helper for clean HTML attributes
+        function escapeHtml(str) {
+            return String(str ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        // Render the main public Link-in-Bio page
+        function renderPublicPage() {
+            document.title = state.pageTitle || 'hanii.mohd';
+            document.getElementById('pubHeaderTitle').textContent = state.headerTitle;
+
+            const bioEl = document.getElementById('pubBioText');
+            if (state.bioText && state.bioText.trim()) {
+                bioEl.textContent = state.bioText.trim();
+                bioEl.classList.remove('hidden');
+            } else {
+                bioEl.textContent = '';
+                bioEl.classList.add('hidden');
+            }
+
+            document.getElementById('pubThemeToggleBtn').classList.toggle('hidden', !state.showThemeToggle);
+
+            const isInverted = document.body.classList.contains('inverted');
+            const root = document.documentElement;
+            root.style.setProperty('--bg-color', isInverted ? state.textColor : state.bgColor);
+            root.style.setProperty('--text-color', isInverted ? state.bgColor : state.textColor);
+            root.style.setProperty('--card-bg', isInverted ? state.textColor : state.cardBg);
+            root.style.setProperty('--border-color', state.borderColor);
+            root.style.setProperty('--hover-bg', isInverted ? state.bgColor : state.hoverBg);
+            root.style.setProperty('--hover-text', isInverted ? state.textColor : state.hoverText);
+            root.style.setProperty('--card-radius', state.radius + 'px');
+            root.style.setProperty('--card-gap', state.gap + 'px');
+            root.style.setProperty('--card-pad-y', state.padY + 'px');
+
+            const linksContainer = document.getElementById('pubLinksList');
+            linksContainer.innerHTML = state.links.map((item, idx) => `
+                <a 
+                    href="${escapeHtml(item.url)}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="link-card group flex items-center justify-between px-4 transition-all duration-150"
+                >
+                    <div class="flex items-center gap-3.5">
+                        ${state.showNumbers ? `<span class="text-xs font-mono opacity-45 w-5">${String(idx + 1).padStart(2, '0')}</span>` : ''}
+                        <span class="font-medium text-sm tracking-tight">${escapeHtml(item.title)}</span>
+                    </div>
+                    ${state.showArrows ? `<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>` : ''}
+                </a>
+            `).join('');
+
+            const footerEl = document.getElementById('pubFooter');
+            if (state.showInsta) {
+                footerEl.classList.remove('hidden');
+                document.getElementById('pubInstaLink').href = state.instaUrl;
+                document.getElementById('pubInstaLabel').textContent = state.instaLabel;
+                document.getElementById('pubInstaArrow').classList.toggle('hidden', !state.showArrows);
+            } else {
+                footerEl.classList.add('hidden');
+            }
+        }
+
+        function togglePublicInvert() {
+            document.body.classList.toggle('inverted');
+            renderPublicPage();
+        }
+
+        // PIN Modal Logic (PIN: 2689)
+        function openPinModal() {
+            const input = document.getElementById('pinInput');
+            input.value = '';
+            document.getElementById('pinError').classList.add('hidden');
+            document.getElementById('pinModal').classList.remove('hidden');
+            setTimeout(() => input.focus(), 50);
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').classList.add('hidden');
+        }
+
+        function verifyPin() {
+            const pin = document.getElementById('pinInput').value.trim();
+            if (pin === '2689') {
+                closePinModal();
+                openStudioEditor();
+            } else {
+                document.getElementById('pinError').classList.remove('hidden');
+                document.getElementById('pinInput').select();
+            }
+        }
+
+        function openStudioEditor() {
+            // Keep a snapshot in case user clicks X without saving
+            backupStateBeforeEdit = JSON.parse(JSON.stringify(state));
+            renderLinksEditor();
+            populateInputsFromState();
+            updateLivePreview();
+            document.getElementById('studioEditorOverlay').classList.remove('hidden');
+        }
+
+        // Clicking X discards unsaved edits and returns to the live site
+        function cancelStudioChanges() {
+            if (backupStateBeforeEdit) {
+                state = JSON.parse(JSON.stringify(backupStateBeforeEdit));
+            }
+            document.getElementById('studioEditorOverlay').classList.add('hidden');
+            renderPublicPage();
+        }
+
+        // Clicking "Save" saves state to Neon Postgres, updates the live site, and closes the editor
+        async function saveAndApplyToSite() {
+            const btnLabel = document.getElementById('saveBtnLabel');
+            const saveBtn = document.getElementById('saveAndApplyBtn');
+            btnLabel.textContent = 'Saving...';
+            saveBtn.disabled = true;
+
+            saveToLocalStorage();
+            renderPublicPage();
+
+            const synced = await neonPushState();
+
+            btnLabel.textContent = 'Save';
+            saveBtn.disabled = false;
+            backupStateBeforeEdit = JSON.parse(JSON.stringify(state));
+            document.getElementById('studioEditorOverlay').classList.add('hidden');
+
+            if (synced) {
+                showToast('Saved to Neon DB & Updated Live Site!');
+            } else {
+                showToast('Saved & Updated Site!');
+            }
+        }
+
+        // Render the editable list of links on the left panel
+        function renderLinksEditor() {
+            const container = document.getElementById('linksEditorContainer');
+            document.getElementById('linkCountBadge').textContent = state.links.length;
+
+            if (state.links.length === 0) {
+                container.innerHTML = `
+                    <div class="p-8 text-center border border-dashed border-neutral-800 rounded-xl text-neutral-500 text-xs">
+                        No links yet. Click "Add Link" above to create one.
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = state.links.map((item, idx) => `
+                <div class="p-3 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-neutral-700 transition group">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[11px] font-mono text-neutral-500 px-1.5 py-0.5 rounded bg-neutral-950 border border-neutral-800">
+                            #${String(idx + 1).padStart(2, '0')}
+                        </span>
+                        <input 
+                            type="text" 
+                            value="${escapeHtml(item.title)}" 
+                            placeholder="Link Title"
+                            oninput="updateLinkField(${idx}, 'title', this.value)"
+                            class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neutral-500 rounded-lg px-2.5 py-1 text-xs font-medium text-white focus:outline-none"
+                        >
+                        <div class="flex items-center gap-1">
+                            <button onclick="moveLink(${idx}, -1)" ${idx === 0 ? 'disabled' : ''} title="Move Up" class="w-6 h-6 rounded bg-neutral-800 hover:bg-neutral-700 disabled:opacity-30 flex items-center justify-center text-neutral-300">
+                                <i class="ph ph-caret-up text-xs"></i>
+                            </button>
+                            <button onclick="moveLink(${idx}, 1)" ${idx === state.links.length - 1 ? 'disabled' : ''} title="Move Down" class="w-6 h-6 rounded bg-neutral-800 hover:bg-neutral-700 disabled:opacity-30 flex items-center justify-center text-neutral-300">
+                                <i class="ph ph-caret-down text-xs"></i>
+                            </button>
+                            <button onclick="removeLink(${idx})" title="Delete Link" class="w-6 h-6 rounded bg-neutral-800 hover:bg-red-500/20 hover:text-red-400 flex items-center justify-center text-neutral-400 transition">
+                                <i class="ph ph-trash text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="ph ph-globe text-neutral-500 text-xs ml-1"></i>
+                        <input 
+                            type="url" 
+                            value="${escapeHtml(item.url)}" 
+                            placeholder="https://..."
+                            oninput="updateLinkField(${idx}, 'url', this.value)"
+                            class="flex-1 bg-neutral-950 border border-neutral-800 focus:border-neutral-500 rounded-lg px-2.5 py-1 text-[11px] font-mono text-neutral-300 focus:outline-none"
+                        >
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateLinkField(index, field, val) {
+            state.links[index][field] = val;
+            updateLivePreview();
+        }
+
+        function addNewLink() {
+            state.links.unshift({
+                title: 'New Project',
+                url: 'https://example.com'
+            });
+            renderLinksEditor();
+            updateLivePreview();
+        }
+
+        function removeLink(index) {
+            state.links.splice(index, 1);
+            renderLinksEditor();
+            updateLivePreview();
+        }
+
+        function moveLink(index, direction) {
+            const target = index + direction;
+            if (target < 0 || target >= state.links.length) return;
+            const temp = state.links[index];
+            state.links[index] = state.links[target];
+            state.links[target] = temp;
+            renderLinksEditor();
+            updateLivePreview();
+        }
+
+        // Sync form inputs with state
+        function populateInputsFromState() {
+            document.getElementById('inpPageTitle').value = state.pageTitle;
+            document.getElementById('inpHeaderTitle').value = state.headerTitle;
+            document.getElementById('inpBioText').value = state.bioText;
+            document.getElementById('inpShowThemeToggle').checked = state.showThemeToggle;
+            document.getElementById('inpShowInsta').checked = state.showInsta;
+            document.getElementById('inpInstaLabel').value = state.instaLabel;
+            document.getElementById('inpInstaUrl').value = state.instaUrl;
+
+            const colorKeys = ['BgColor', 'TextColor', 'CardBg', 'BorderColor', 'HoverBg', 'HoverText'];
+            const stateKeys = ['bgColor', 'textColor', 'cardBg', 'borderColor', 'hoverBg', 'hoverText'];
+            colorKeys.forEach((k, i) => {
+                const val = state[stateKeys[i]];
+                document.getElementById('inp' + k).value = val;
+                document.getElementById('txt' + k).value = val;
+            });
+
+            document.getElementById('inpShowNumbers').checked = state.showNumbers;
+            document.getElementById('inpShowArrows').checked = state.showArrows;
+            document.getElementById('inpRadius').value = state.radius;
+            document.getElementById('inpGap').value = state.gap;
+            document.getElementById('inpPadY').value = state.padY;
+
+            document.getElementById('lblRadius').textContent = state.radius + 'px';
+            document.getElementById('lblGap').textContent = state.gap + 'px';
+            document.getElementById('lblPadY').textContent = state.padY + 'px';
+        }
+
+        function updateConfigFromInputs() {
+            state.pageTitle = document.getElementById('inpPageTitle').value;
+            state.headerTitle = document.getElementById('inpHeaderTitle').value;
+            state.bioText = document.getElementById('inpBioText').value;
+            state.showThemeToggle = document.getElementById('inpShowThemeToggle').checked;
+            state.showInsta = document.getElementById('inpShowInsta').checked;
+            state.instaLabel = document.getElementById('inpInstaLabel').value;
+            state.instaUrl = document.getElementById('inpInstaUrl').value;
+
+            state.bgColor = document.getElementById('inpBgColor').value;
+            state.textColor = document.getElementById('inpTextColor').value;
+            state.cardBg = document.getElementById('inpCardBg').value;
+            state.borderColor = document.getElementById('inpBorderColor').value;
+            state.hoverBg = document.getElementById('inpHoverBg').value;
+            state.hoverText = document.getElementById('inpHoverText').value;
+
+            document.getElementById('txtBgColor').value = state.bgColor;
+            document.getElementById('txtTextColor').value = state.textColor;
+            document.getElementById('txtCardBg').value = state.cardBg;
+            document.getElementById('txtBorderColor').value = state.borderColor;
+            document.getElementById('txtHoverBg').value = state.hoverBg;
+            document.getElementById('txtHoverText').value = state.hoverText;
+
+            state.showNumbers = document.getElementById('inpShowNumbers').checked;
+            state.showArrows = document.getElementById('inpShowArrows').checked;
+            state.radius = Number(document.getElementById('inpRadius').value);
+            state.gap = Number(document.getElementById('inpGap').value);
+            state.padY = Number(document.getElementById('inpPadY').value);
+
+            document.getElementById('lblRadius').textContent = state.radius + 'px';
+            document.getElementById('lblGap').textContent = state.gap + 'px';
+            document.getElementById('lblPadY').textContent = state.padY + 'px';
+
+            updateLivePreview();
+        }
+
+        function syncColorText(suffix) {
+            const val = document.getElementById('txt' + suffix).value.trim();
+            if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+                document.getElementById('inp' + suffix).value = val;
+                updateConfigFromInputs();
+            }
+        }
+
+        function applyColorPreset(preset) {
+            const presets = {
+                pureDark: {
+                    bgColor: '#000000', textColor: '#ffffff', cardBg: '#000000',
+                    borderColor: '#262626', hoverBg: '#ffffff', hoverText: '#000000'
+                },
+                pureLight: {
+                    bgColor: '#ffffff', textColor: '#000000', cardBg: '#ffffff',
+                    borderColor: '#e5e5e5', hoverBg: '#000000', hoverText: '#ffffff'
+                },
+                emeraldNight: {
+                    bgColor: '#090d0b', textColor: '#ecfdf5', cardBg: '#0f1714',
+                    borderColor: '#1f352b', hoverBg: '#10b981', hoverText: '#000000'
+                },
+                warmCream: {
+                    bgColor: '#f7f4ef', textColor: '#1c1917', cardBg: '#efeae2',
+                    borderColor: '#dcd5c9', hoverBg: '#1c1917', hoverText: '#f7f4ef'
+                },
+                midnightBlue: {
+                    bgColor: '#090d16', textColor: '#f0f9ff', cardBg: '#0f172a',
+                    borderColor: '#1e293b', hoverBg: '#38bdf8', hoverText: '#090d16'
+                },
+                roseNoir: {
+                    bgColor: '#12090d', textColor: '#fff1f2', cardBg: '#1f1017',
+                    borderColor: '#3b1c29', hoverBg: '#fb7185', hoverText: '#12090d'
+                }
+            };
+            if (presets[preset]) {
+                Object.assign(state, presets[preset]);
+                populateInputsFromState();
+                updateLivePreview();
+            }
+        }
+
+        // NEON SERVERLESS POSTGRES SYNC
+        async function getNeonClient() {
+            const mod = await import('https://esm.sh/@neondatabase/serverless');
+            return mod.neon(NEON_DATABASE_URL);
+        }
+
+        async function neonPushState() {
+            try {
+                const sql = await getNeonClient();
+                await sql`
+                    CREATE TABLE IF NOT EXISTS link_in_bio_state (
+                        slug TEXT PRIMARY KEY,
+                        config JSONB NOT NULL,
+                        updated_at TIMESTAMPTZ DEFAULT NOW()
+                    )
+                `;
+                const payload = JSON.stringify(state);
+                await sql`
+                    INSERT INTO link_in_bio_state (slug, config, updated_at)
+                    VALUES ('hanii.mohd', ${payload}::jsonb, NOW())
+                    ON CONFLICT (slug)
+                    DO UPDATE SET config = EXCLUDED.config, updated_at = NOW()
+                `;
+                const badge = document.getElementById('neonConnBadge');
+                if (badge) {
+                    badge.textContent = 'Neon Synced';
+                    badge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+                }
+                return true;
+            } catch (err) {
+                console.warn('Neon Push Error:', err);
+                return false;
+            }
+        }
+
+        async function neonPullState() {
+            try {
+                const sql = await getNeonClient();
+                await sql`
+                    CREATE TABLE IF NOT EXISTS link_in_bio_state (
+                        slug TEXT PRIMARY KEY,
+                        config JSONB NOT NULL,
+                        updated_at TIMESTAMPTZ DEFAULT NOW()
+                    )
+                `;
+                const rows = await sql`SELECT config FROM link_in_bio_state WHERE slug = 'hanii.mohd' LIMIT 1`;
+                if (!rows || rows.length === 0) {
+                    await neonPushState();
+                    return;
+                }
+                const remoteConfig = typeof rows[0].config === 'string' ? JSON.parse(rows[0].config) : rows[0].config;
+                state = Object.assign({}, defaultState, remoteConfig);
+                saveToLocalStorage();
+                renderPublicPage();
+                renderLinksEditor();
+                populateInputsFromState();
+                updateLivePreview();
+
+                const badge = document.getElementById('neonConnBadge');
+                if (badge) {
+                    badge.textContent = 'Neon Live';
+                    badge.className = 'text-[10px] font-mono px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 border border-emerald-500/30';
+                }
+            } catch (err) {
+                console.warn('Neon Pull Error:', err);
+            }
+        }
+
+        // Generate preview HTML for the right-side iframe inside the Studio editor
+        function generatePreviewHTML() {
+            const linksJson = JSON.stringify(state.links, null, 12);
+            const subtitleMarkup = state.bioText.trim()
+                ? `\n                <p class="text-xs opacity-60 mt-0.5">${escapeHtml(state.bioText.trim())}</p>`
+                : '';
+
+            const toggleButtonMarkup = state.showThemeToggle
+                ? `\n            <button onclick="document.body.classList.toggle('inverted')" aria-label="Toggle Invert" class="w-8 h-8 flex items-center justify-center rounded-full custom-border opacity-70 hover:opacity-100 transition">
+                <i class="ph ph-circle-half text-lg"></i>
+            </button>`
+                : '';
+
+            const footerMarkup = state.showInsta
+                ? `\n        <footer class="mt-6 pt-5 custom-border-t">
+            <a 
+                href="${escapeHtml(state.instaUrl)}" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="link-card group flex items-center justify-between px-4 transition-all duration-150"
+            >
+                <div class="flex items-center gap-3">
+                    <i class="ph ph-instagram-logo text-lg opacity-60 group-hover:opacity-100"></i>
+                    <span class="font-medium text-sm tracking-tight">${escapeHtml(state.instaLabel)}</span>
+                </div>
+                ${state.showArrows ? '<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>' : ''}
+            </a>
+        </footer>`
+                : '';
+
+            return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${escapeHtml(state.pageTitle)}</title>
+    <script src="https://cdn.tailwindcss.com"><\/script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"><\/script>
+    <style>
+        :root {
+            --bg-color: ${state.bgColor};
+            --text-color: ${state.textColor};
+            --card-bg: ${state.cardBg};
+            --border-color: ${state.borderColor};
+            --hover-bg: ${state.hoverBg};
+            --hover-text: ${state.hoverText};
+            --card-radius: ${state.radius}px;
+            --card-gap: ${state.gap}px;
+            --card-pad-y: ${state.padY}px;
+        }
+        body.inverted {
+            --bg-color: ${state.textColor};
+            --text-color: ${state.bgColor};
+            --card-bg: ${state.textColor};
+            --border-color: ${state.borderColor};
+            --hover-bg: ${state.bgColor};
+            --hover-text: ${state.textColor};
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .custom-border { border: 1px solid var(--border-color); }
+        .custom-border-b { border-bottom: 1px solid var(--border-color); }
+        .custom-border-t { border-top: 1px solid var(--border-color); }
+        .links-stack { display: flex; flex-direction: column; gap: var(--card-gap); }
+        .link-card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            padding-top: var(--card-pad-y);
+            padding-bottom: var(--card-pad-y);
+        }
+        .link-card:hover {
+            background-color: var(--hover-bg);
+            color: var(--hover-text);
+            border-color: var(--hover-bg);
+        }
+    </style>
+</head>
+<body class="min-h-screen antialiased overflow-y-auto">
+    <main class="max-w-md mx-auto px-5 py-8">
+        <header class="flex items-center justify-between pb-5 mb-4 custom-border-b">
+            <div>
+                <h1 class="font-semibold text-lg tracking-tight">${escapeHtml(state.headerTitle)}</h1>${subtitleMarkup}
+            </div>${toggleButtonMarkup}
+        </header>
+        <nav id="linksList" class="links-stack"></nav>${footerMarkup}
+    </main>
+    <script>
+        const LINKS = ${linksJson};
+        function renderLinks() {
+            const container = document.getElementById('linksList');
+            container.innerHTML = LINKS.map((item, idx) => \`
+                <a 
+                    href="\${item.url}" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class="link-card group flex items-center justify-between px-4 transition-all duration-150"
+                >
+                    <div class="flex items-center gap-3.5">
+                        ${state.showNumbers ? `<span class="text-xs font-mono opacity-45 w-5">\${String(idx + 1).padStart(2, '0')}</span>` : ''}
+                        <span class="font-medium text-sm tracking-tight">\${item.title}</span>
+                    </div>
+                    ${state.showArrows ? `<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>` : ''}
+                </a>
+            \`).join('');
+        }
+        window.onload = renderLinks;
+    <\/script>
+</body>
+</html>`;
+        }
+
+        function updateLivePreview() {
+            const iframe = document.getElementById('livePreviewFrame');
+            if (iframe) {
+                iframe.srcdoc = generatePreviewHTML();
+            }
+        }
+
+        // Tab Switching in Left Editor
+        function switchEditorTab(tab) {
+            ['links', 'text', 'style'].forEach(t => {
+                const btn = document.getElementById('tabBtn-' + t);
+                const panel = document.getElementById('tabPanel-' + t);
+                if (!btn || !panel) return;
+                if (t === tab) {
+                    btn.classList.add('border-white', 'text-white');
+                    btn.classList.remove('border-transparent', 'text-neutral-400');
+                    panel.classList.remove('hidden');
+                } else {
+                    btn.classList.remove('border-white', 'text-white');
+                    btn.classList.add('border-transparent', 'text-neutral-400');
+                    panel.classList.add('hidden');
+                }
+            });
+        }
+
+        // Responsive Mobile Toggle (Edit vs Preview)
+        function setMobileView(mode) {
+            const editorPane = document.getElementById('editorPane');
+            const previewPane = document.getElementById('previewPane');
+            const btnEdit = document.getElementById('mobTabEdit');
+            const btnPreview = document.getElementById('mobTabPreview');
+
+            if (mode === 'preview') {
+                editorPane.classList.add('hidden');
+                previewPane.classList.remove('hidden');
+                previewPane.classList.add('flex');
+                btnPreview.className = 'px-2.5 py-1 rounded-md text-xs font-medium bg-white text-black transition';
+                btnEdit.className = 'px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition';
+            } else {
+                editorPane.classList.remove('hidden');
+                previewPane.classList.add('hidden');
+                previewPane.classList.remove('flex');
+                btnEdit.className = 'px-2.5 py-1 rounded-md text-xs font-medium bg-white text-black transition';
+                btnPreview.className = 'px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition';
+            }
+        }
+
+        // Preview Width Switcher
+        function setPreviewWidth(mode) {
+            const wrapper = document.getElementById('previewFrameWrapper');
+            const btnMob = document.getElementById('btnWidthMobile');
+            const btnFull = document.getElementById('btnWidthFull');
+
+            if (mode === 'full') {
+                wrapper.classList.remove('max-w-[410px]');
+                wrapper.classList.add('max-w-full');
+                btnFull.className = 'px-2.5 py-1 rounded-md text-xs font-medium bg-neutral-800 text-white transition';
+                btnMob.className = 'px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition';
+            } else {
+                wrapper.classList.add('max-w-[410px]');
+                wrapper.classList.remove('max-w-full');
+                btnMob.className = 'px-2.5 py-1 rounded-md text-xs font-medium bg-neutral-800 text-white transition';
+                btnFull.className = 'px-2.5 py-1 rounded-md text-xs font-medium text-neutral-400 hover:text-white transition';
+            }
+        }
+
+        // Bulk Import URLs Modal Actions
+        function openImportModal() {
+            document.getElementById('bulkUrlsInput').value = '';
+            document.getElementById('importModal').classList.remove('hidden');
+        }
+
+        function closeImportModal() {
+            document.getElementById('importModal').classList.add('hidden');
+        }
+
+        function autoTitleFromUrl(rawUrl) {
+            try {
+                const u = new URL(rawUrl);
+                let host = u.hostname.replace(/^www\./, '');
+                let slug = host.split('.')[0];
+                return slug
+                    .replace(/[-_]+/g, ' ')
+                    .replace(/\b\w/g, c => c.toUpperCase());
+            } catch (e) {
+                return 'New Link';
+            }
+        }
+
+        function processBulkImport() {
+            const raw = document.getElementById('bulkUrlsInput').value;
+            const lines = raw.split('\n').map(l => l.trim()).filter(Boolean);
+
+            lines.forEach(line => {
+                if (line.includes('|')) {
+                    const parts = line.split('|').map(p => p.trim());
+                    if (parts[1]) {
+                        state.links.push({ title: parts[0] || autoTitleFromUrl(parts[1]), url: parts[1] });
+                    }
+                } else {
+                    const url = line.startsWith('http') ? line : 'https://' + line;
+                    state.links.push({ title: autoTitleFromUrl(url), url });
+                }
+            });
+
+            closeImportModal();
+            renderLinksEditor();
+            updateLivePreview();
+        }
+
+        // Initialize on load and pull latest saved state from Neon Postgres
+        window.onload = function () {
+            renderPublicPage();
+            renderLinksEditor();
+            populateInputsFromState();
+            updateLivePreview();
+            neonPullState();
+        };
+    </script>
+</body>
+</html>
