@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>hanii.mohd</title>
+    <!-- FAVICON (Uploaded Logo) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1000196970-h0sMAsC3o5xQJg371R9S8N4k2TfE3H.png">
+    <link rel="apple-touch-icon" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1000196970-h0sMAsC3o5xQJg371R9S8N4k2TfE3H.png">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
 
     <script>
@@ -728,7 +735,7 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'hani_studio_state_v11';
+        const STORAGE_KEY = 'hani_studio_state_v12';
         const NEON_DATABASE_URL = 'postgresql://neondb_owner:npg_X5KcSygU7sFQ@ep-mute-shape-b5hnmygz-pooler.c-7.us-east-2.aws.neon.tech/neondb?sslmode=require';
 
         const CORE_16_LINKS = [
@@ -832,7 +839,7 @@
 
         function loadSavedState() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('hani_studio_state_v10');
+                const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('hani_studio_state_v11');
                 if (raw) {
                     const parsed = JSON.parse(raw);
                     const merged = Object.assign({}, defaultState, parsed);
@@ -1713,6 +1720,7 @@
 <head>
     <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${escapeHtml(state.pageTitle)}</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/1000196970-h0sMAsC3o5xQJg371R9S8N4k2TfE3H.png">
     <script src="https://cdn.tailwindcss.com"><\/script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/@phosphor-icons/web"><\/script>
