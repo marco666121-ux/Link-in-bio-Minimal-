@@ -553,7 +553,6 @@
             </main>
         </div>
 
-        <!-- MODAL: BULK IMPORT -->
         <div id="importModal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-lg flex flex-col shadow-2xl overflow-hidden">
                 <div class="px-5 py-4 border-b border-neutral-800 flex items-center justify-between">
@@ -575,7 +574,6 @@
             </div>
         </div>
 
-        <!-- MODAL: EDIT GAME / LINK -->
         <div id="editGameModal" class="fixed inset-0 z-[55] hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-[#141414] border border-neutral-800 rounded-3xl w-full max-w-md max-h-[92vh] flex flex-col shadow-2xl overflow-hidden text-white">
                 <div class="px-5 py-4 flex items-center justify-between border-b border-neutral-800/80 shrink-0">
@@ -684,7 +682,6 @@
             </div>
         </div>
 
-        <!-- MODAL: ADJUST THUMBNAILS -->
         <div id="adjustThumbModal" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
             <div class="bg-[#161616] border border-neutral-800 rounded-3xl w-full max-w-md p-5 space-y-5 shadow-2xl text-white">
                 <h3 class="text-sm font-bold text-center">Adjust Thumbnails</h3>
@@ -735,10 +732,10 @@
     </div>
 
     <script>
-        const STORAGE_KEY = 'hani_studio_state_v12';
+        const STORAGE_KEY = 'hani_studio_state_v13';
         const NEON_DATABASE_URL = 'postgresql://neondb_owner:npg_X5KcSygU7sFQ@ep-mute-shape-b5hnmygz-pooler.c-7.us-east-2.aws.neon.tech/neondb?sslmode=require';
 
-        const CORE_16_LINKS = [
+        const INITIAL_16_LINKS = [
             { title: 'Paisa Tha', url: 'https://paisa-tha.lovable.app/' },
             { title: 'Traitors', url: 'https://traitors-625779343117.asia-southeast1.run.app/' },
             { title: 'Quick Copy Bot', url: 'https://quick-copy-bot.vercel.app/' },
@@ -778,21 +775,6 @@
             }, item || {});
         }
 
-        function ensureLinksPreserved(existingLinks) {
-            const list = Array.isArray(existingLinks) ? existingLinks.map(normalizeLinkItem) : [];
-            if (list.length === 0) {
-                return CORE_16_LINKS.map(normalizeLinkItem);
-            }
-            const existingUrls = new Set(list.map(l => (l.url || '').trim().toLowerCase()));
-            CORE_16_LINKS.forEach(core => {
-                const key = core.url.trim().toLowerCase();
-                if (!existingUrls.has(key)) {
-                    list.push(normalizeLinkItem(core));
-                }
-            });
-            return list;
-        }
-
         const PLAIN_SWATCHES = ['#0d0d0d', '#1a1d2d', '#111c2d', '#1c1917', '#141a1c', '#2a2421', '#1e1b4b', '#132337'];
 
         const defaultState = {
@@ -824,7 +806,7 @@
             radius: 8,
             gap: 10,
             padY: 14,
-            links: CORE_16_LINKS.map(normalizeLinkItem)
+            links: INITIAL_16_LINKS.map(normalizeLinkItem)
         };
 
         let state = loadSavedState();
@@ -839,19 +821,15 @@
 
         function loadSavedState() {
             try {
-                const raw = localStorage.getItem(STORAGE_KEY) || localStorage.getItem('hani_studio_state_v11');
+                const raw = localStorage.getItem(STORAGE_KEY);
                 if (raw) {
                     const parsed = JSON.parse(raw);
-                    const merged = Object.assign({}, defaultState, parsed);
-                    merged.links = ensureLinksPreserved(merged.links);
-                    return merged;
+                    return Object.assign({}, defaultState, parsed);
                 }
             } catch (e) {
                 console.warn('Could not read saved state:', e);
             }
-            const copy = JSON.parse(JSON.stringify(defaultState));
-            copy.links = ensureLinksPreserved(copy.links);
-            return copy;
+            return JSON.parse(JSON.stringify(defaultState));
         }
 
         function saveToLocalStorage() {
@@ -1687,8 +1665,7 @@
                 if (!rows || rows.length === 0) { await neonPushState(); return; }
                 const remoteConfig = typeof rows[0].config === 'string' ? JSON.parse(rows[0].config) : rows[0].config;
                 if (remoteConfig && typeof remoteConfig === 'object') {
-                    const mergedLinks = ensureLinksPreserved(remoteConfig.links);
-                    state = Object.assign({}, defaultState, remoteConfig, { links: mergedLinks });
+                    state = Object.assign({}, defaultState, remoteConfig);
                     saveToLocalStorage(); renderPublicPage(); renderLinksEditor(); populateInputsFromState(); updateLivePreview();
                 }
                 const badge = document.getElementById('neonConnBadge');
