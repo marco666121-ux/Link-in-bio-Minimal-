@@ -44,6 +44,7 @@
             }
         }
     </script>
+
     <style>
         :root {
             --bg-color: #000000;
@@ -164,17 +165,17 @@
             <video id="pubCustomVideo" autoplay loop muted playsinline class="w-full h-full object-cover hidden"></video>
         </div>
 
-        <main class="max-w-md mx-auto px-5 relative z-10" style="padding-top: var(--header-pad-y); padding-bottom: var(--header-pad-y);">
+        <main class="max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 lg:px-12 relative z-10 transition-all duration-200" style="padding-top: var(--header-pad-y); padding-bottom: var(--header-pad-y);">
             <header class="flex items-center justify-between custom-border-b" style="padding-bottom: var(--header-gap); margin-bottom: var(--header-gap);">
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 id="pubHeaderTitle" class="font-semibold text-base tracking-tight">hanii.mohd</h1>
+                        <h1 id="pubHeaderTitle" class="font-semibold text-base md:text-xl tracking-tight">hanii.mohd</h1>
                     </div>
-                    <p id="pubBioText" class="text-xs opacity-60 mt-0.5 hidden"></p>
+                    <p id="pubBioText" class="text-xs md:text-sm opacity-60 mt-0.5 hidden"></p>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button type="button" onclick="openPinModal()" aria-label="Settings" title="Open Studio Editor" class="w-7 h-7 flex items-center justify-center rounded-full custom-border opacity-70 hover:opacity-100 transition cursor-pointer">
-                        <i class="ph ph-gear text-base"></i>
+                    <button type="button" onclick="openPinModal()" aria-label="Settings" title="Open Studio Editor" class="w-7 h-7 md:w-9 md:h-9 flex items-center justify-center rounded-full custom-border opacity-70 hover:opacity-100 transition cursor-pointer">
+                        <i class="ph ph-gear text-base md:text-lg"></i>
                     </button>
                 </div>
             </header>
@@ -182,10 +183,10 @@
             <nav id="pubLinksList" class="links-stack"></nav>
 
             <footer id="pubFooter" class="custom-border-t" style="margin-top: var(--header-gap); padding-top: var(--header-gap);">
-                <a id="pubInstaLink" href="https://instagram.com/hanii.mohd" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 transition-all duration-150">
+                <a id="pubInstaLink" href="https://instagram.com/hanii.mohd" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 md:px-5 max-w-md mx-auto md:max-w-sm transition-all duration-150">
                     <div class="flex items-center gap-3">
-                        <i class="ph ph-instagram-logo text-lg opacity-60 group-hover:opacity-100"></i>
-                        <span id="pubInstaLabel" class="font-medium text-sm tracking-tight">@hanii.mohd</span>
+                        <i class="ph ph-instagram-logo text-lg md:text-xl opacity-60 group-hover:opacity-100"></i>
+                        <span id="pubInstaLabel" class="font-medium text-sm md:text-base tracking-tight">@hanii.mohd</span>
                     </div>
                     <i id="pubInstaArrow" class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>
                 </a>
@@ -873,22 +874,22 @@
                 ? `<img src="${escapeHtml(it.image)}" alt="${escapeHtml(it.title)}" style="object-position: ${it.gridX}% ${it.gridY}%; transform: scale(${it.gridZoom || 1});" class="w-full h-full object-cover transition-transform duration-200 group-hover:scale-[1.03]">`
                 : `<div class="w-full h-full flex flex-col items-center justify-center bg-neutral-950 p-2 text-center select-none">
                         <span class="text-[11px] font-mono uppercase tracking-wider text-neutral-500">No Image</span>
-                        <span class="text-xs font-semibold text-neutral-200 mt-1 line-clamp-1">${escapeHtml(it.title)}</span>
+                        <span class="text-xs md:text-sm font-semibold text-neutral-200 mt-1 line-clamp-1">${escapeHtml(it.title)}</span>
                    </div>`;
 
             const newBadgeMarkup = it.isNew
-                ? `<span class="absolute top-2 right-2 z-10 px-2.5 py-0.5 rounded-full bg-white text-black font-sans font-extrabold text-[10px] tracking-wide shadow">NEW</span>`
+                ? `<span class="absolute top-2 right-2 md:top-2.5 md:right-2.5 z-10 px-2.5 py-0.5 rounded-full bg-white text-black font-sans font-extrabold text-[10px] md:text-[11px] tracking-wide shadow">NEW</span>`
                 : '';
 
             const bottomOverlayMarkup = (it.showName || it.showPlayers)
-                ? `<div class="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-2.5 py-1.5 flex items-end justify-between">
-                        ${it.showName ? `<span class="text-[11px] font-semibold text-white truncate">${escapeHtml(it.title)}</span>` : '<span></span>'}
-                        ${it.showPlayers ? `<span class="text-[10px] text-neutral-300 font-mono">${Number(it.players) || 0} players</span>` : ''}
+                ? `<div class="absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/90 via-black/60 to-transparent px-2.5 py-1.5 md:px-3.5 md:py-2 flex items-end justify-between">
+                        ${it.showName ? `<span class="text-[11px] md:text-xs font-semibold text-white truncate">${escapeHtml(it.title)}</span>` : '<span></span>'}
+                        ${it.showPlayers ? `<span class="text-[10px] md:text-[11px] text-neutral-300 font-mono">${Number(it.players) || 0} players</span>` : ''}
                    </div>`
                 : '';
 
             return `
-                <a href="${escapeHtml(it.url)}" target="_blank" rel="noopener noreferrer" style="${borderStyle} ${glowStyle}" class="group relative aspect-[16/10] rounded-2xl overflow-hidden bg-neutral-900 block transition-transform duration-150 active:scale-[0.98]">
+                <a href="${escapeHtml(it.url)}" target="_blank" rel="noopener noreferrer" style="${borderStyle} ${glowStyle}" class="group relative aspect-[16/10] rounded-2xl overflow-hidden bg-neutral-900 block transition-transform duration-150 hover:scale-[1.015] active:scale-[0.98]">
                     ${imgMarkup}
                     ${newBadgeMarkup}
                     ${bottomOverlayMarkup}
@@ -955,15 +956,15 @@
 
             const linksContainer = document.getElementById('pubLinksList');
             if (state.displayMode === 'images') {
-                linksContainer.className = 'grid grid-cols-2 gap-3';
+                linksContainer.className = 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5';
                 linksContainer.innerHTML = state.links.map(item => buildImageBoxCardHTML(item)).join('');
             } else {
-                linksContainer.className = 'links-stack';
+                linksContainer.className = 'links-stack md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-3.5';
                 linksContainer.innerHTML = state.links.map((item, idx) => `
-                    <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 transition-all duration-150">
+                    <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 md:px-5 transition-all duration-150">
                         <div class="flex items-center gap-3.5">
                             ${state.showNumbers ? `<span class="text-xs font-mono opacity-45 w-5">${String(idx + 1).padStart(2, '0')}</span>` : ''}
-                            <span class="font-medium text-sm tracking-tight">${escapeHtml(item.title)}</span>
+                            <span class="font-medium text-sm md:text-base tracking-tight">${escapeHtml(item.title)}</span>
                         </div>
                         ${state.showArrows ? `<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>` : ''}
                     </a>
@@ -1084,7 +1085,7 @@
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, w, h);
 
-            const step = 12;
+            const step = w > 900 ? 18 : 12;
             const cols = Math.ceil(w / step) + 1;
             const rows = Math.ceil(h / step) + 1;
             const scale = 0.0042;
@@ -1666,6 +1667,9 @@
                 const remoteConfig = typeof rows[0].config === 'string' ? JSON.parse(rows[0].config) : rows[0].config;
                 if (remoteConfig && typeof remoteConfig === 'object') {
                     state = Object.assign({}, defaultState, remoteConfig);
+                    if (Array.isArray(remoteConfig.links)) {
+                        state.links = remoteConfig.links.map(normalizeLinkItem);
+                    }
                     saveToLocalStorage(); renderPublicPage(); renderLinksEditor(); populateInputsFromState(); updateLivePreview();
                 }
                 const badge = document.getElementById('neonConnBadge');
@@ -1674,8 +1678,8 @@
         }
 
         function generatePreviewHTML() {
-            const subtitleMarkup = state.bioText.trim() ? `\n                <p class="text-xs opacity-60 mt-0.5">${escapeHtml(state.bioText.trim())}</p>` : '';
-            const footerMarkup = state.showInsta ? `\n        <footer class="custom-border-t" style="margin-top: ${state.headerGap}px; padding-top: ${state.headerGap}px;"><a href="${escapeHtml(state.instaUrl)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 transition-all duration-150"><div class="flex items-center gap-3"><i class="ph ph-instagram-logo text-lg opacity-60 group-hover:opacity-100"></i><span class="font-medium text-sm tracking-tight">${escapeHtml(state.instaLabel)}</span></div>${state.showArrows ? '<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>' : ''}</a></footer>` : '';
+            const subtitleMarkup = state.bioText.trim() ? `\n                <p class="text-xs md:text-sm opacity-60 mt-0.5">${escapeHtml(state.bioText.trim())}</p>` : '';
+            const footerMarkup = state.showInsta ? `\n        <footer class="custom-border-t" style="margin-top: ${state.headerGap}px; padding-top: ${state.headerGap}px;"><a href="${escapeHtml(state.instaUrl)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 md:px-5 max-w-md mx-auto md:max-w-sm transition-all duration-150"><div class="flex items-center gap-3"><i class="ph ph-instagram-logo text-lg md:text-xl opacity-60 group-hover:opacity-100"></i><span class="font-medium text-sm md:text-base tracking-tight">${escapeHtml(state.instaLabel)}</span></div>${state.showArrows ? '<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>' : ''}</a></footer>` : '';
 
             const isImagesMode = state.displayMode === 'images';
             const patClass = isImagesMode ? (state.bgPattern === 'dots' ? `bg-pattern-dots ${state.dotsAnimate !== false ? 'animate-pattern-dots' : ''}` : state.bgPattern === 'grid' ? `bg-pattern-grid ${state.gridAnimate !== false ? 'animate-pattern-grid' : ''}` : '') : '';
@@ -1683,10 +1687,10 @@
             const isVideoBg = isImagesMode && (state.bgPattern || 'waves') === 'waves';
 
             const innerLinksMarkup = isImagesMode ? state.links.map(item => buildImageBoxCardHTML(item)).join('') : state.links.map((item, idx) => `
-                <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 transition-all duration-150">
+                <a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer" class="link-card group flex items-center justify-between px-4 md:px-5 transition-all duration-150">
                     <div class="flex items-center gap-3.5">
                         ${state.showNumbers ? `<span class="text-xs font-mono opacity-45 w-5">${String(idx + 1).padStart(2, '0')}</span>` : ''}
-                        <span class="font-medium text-sm tracking-tight">${escapeHtml(item.title)}</span>
+                        <span class="font-medium text-sm md:text-base tracking-tight">${escapeHtml(item.title)}</span>
                     </div>
                     ${state.showArrows ? `<i class="ph ph-arrow-up-right text-base opacity-50 group-hover:opacity-100 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></i>` : ''}
                 </a>
@@ -1720,11 +1724,11 @@
 </head>
 <body class="min-h-screen antialiased overflow-y-auto relative ${patClass}">
     ${isVideoBg ? `<canvas id="prevTopoCanvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>` : ''}
-    <main class="max-w-md mx-auto px-5 relative z-10" style="padding-top: ${state.headerPadY}px; padding-bottom: ${state.headerPadY}px;">
-        <header class="flex items-center justify-between custom-border-b" style="padding-bottom: ${state.headerGap}px; margin-bottom: ${state.headerGap}px;"><div><h1 class="font-semibold text-base tracking-tight">${escapeHtml(state.headerTitle)}</h1>${subtitleMarkup}</div></header>
-        <nav id="linksList" class="${isImagesMode ? 'grid grid-cols-2 gap-3' : 'links-stack'}">${innerLinksMarkup}</nav>${footerMarkup}
+    <main class="max-w-md md:max-w-3xl lg:max-w-5xl xl:max-w-6xl mx-auto px-5 md:px-8 lg:px-12 relative z-10" style="padding-top: ${state.headerPadY}px; padding-bottom: ${state.headerPadY}px;">
+        <header class="flex items-center justify-between custom-border-b" style="padding-bottom: ${state.headerGap}px; margin-bottom: ${state.headerGap}px;"><div><h1 class="font-semibold text-base md:text-xl tracking-tight">${escapeHtml(state.headerTitle)}</h1>${subtitleMarkup}</div></header>
+        <nav id="linksList" class="${isImagesMode ? 'grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4 lg:gap-5' : 'links-stack md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-3.5'}">${innerLinksMarkup}</nav>${footerMarkup}
     </main>
-    ${isVideoBg ? `<script>(function(){const canvas=document.getElementById('prevTopoCanvas');let t=0;function field(x,y,t){return Math.sin(x*1.4+t*0.7)*Math.cos(y*1.2-t*0.5)+0.6*Math.sin(x*2.3-y*1.8+t*0.9)+0.35*Math.cos(x*3.1+y*2.7-t*0.6);}function draw(){const w=window.innerWidth,h=window.innerHeight;if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}const ctx=canvas.getContext('2d');ctx.fillStyle='#000000';ctx.fillRect(0,0,w,h);const step=14,cols=Math.ceil(w/step)+1,rows=Math.ceil(h/step)+1,scale=0.0042;const grid=new Float32Array(cols*rows);for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){grid[r*cols+c]=field(c*step*scale,r*step*scale,t);}}const levels=[-1.1,-0.75,-0.4,-0.05,0.3,0.65,1.0];ctx.strokeStyle='rgba(255, 255, 255, 0.28)';ctx.lineWidth=1.15;ctx.beginPath();for(let l=0;l<levels.length;l++){const th=levels[l];for(let r=0;r<rows-1;r++){const y=r*step;for(let c=0;c<cols-1;c++){const x=c*step;const v0=grid[r*cols+c]-th,v1=grid[r*cols+c+1]-th,v2=grid[(r+1)*cols+c+1]-th,v3=grid[(r+1)*cols+c]-th;let m=(v0>0?1:0)|(v1>0?2:0)|(v2>0?4:0)|(v3>0?8:0);if(m===0||m===15)continue;const ax=x+step*(v0/(v0-v1)),ay=y,bx=x+step,by=y+step*(v1/(v1-v2)),cx=x+step*(v3/(v3-v2)),cy=y+step,dx=x,dy=y+step*(v0/(v0-v3));if(m===1||m===14){ctx.moveTo(dx,dy);ctx.lineTo(ax,ay);}else if(m===2||m===13){ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}else if(m===3||m===12){ctx.moveTo(dx,dy);ctx.lineTo(bx,by);}else if(m===4||m===11){ctx.moveTo(bx,by);ctx.lineTo(cx,cy);}else if(m===6||m===9){ctx.moveTo(ax,ay);ctx.lineTo(cx,cy);}else if(m===7||m===8){ctx.moveTo(dx,dy);ctx.lineTo(cx,cy);}}}ctx.stroke();t+=0.012;requestAnimationFrame(draw);}draw();})();<\/script>` : ''}
+    ${isVideoBg ? `<script>(function(){const canvas=document.getElementById('prevTopoCanvas');let t=0;function field(x,y,t){return Math.sin(x*1.4+t*0.7)*Math.cos(y*1.2-t*0.5)+0.6*Math.sin(x*2.3-y*1.8+t*0.9)+0.35*Math.cos(x*3.1+y*2.7-t*0.6);}function draw(){const w=window.innerWidth,h=window.innerHeight;if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}const ctx=canvas.getContext('2d');ctx.fillStyle='#000000';ctx.fillRect(0,0,w,h);const step=w>900?18:14,cols=Math.ceil(w/step)+1,rows=Math.ceil(h/step)+1,scale=0.0042;const grid=new Float32Array(cols*rows);for(let r=0;r<rows;r++){for(let c=0;c<cols;c++){grid[r*cols+c]=field(c*step*scale,r*step*scale,t);}}const levels=[-1.1,-0.75,-0.4,-0.05,0.3,0.65,1.0];ctx.strokeStyle='rgba(255, 255, 255, 0.28)';ctx.lineWidth=1.15;ctx.beginPath();for(let l=0;l<levels.length;l++){const th=levels[l];for(let r=0;r<rows-1;r++){const y=r*step;for(let c=0;c<cols-1;c++){const x=c*step;const v0=grid[r*cols+c]-th,v1=grid[r*cols+c+1]-th,v2=grid[(r+1)*cols+c+1]-th,v3=grid[(r+1)*cols+c]-th;let m=(v0>0?1:0)|(v1>0?2:0)|(v2>0?4:0)|(v3>0?8:0);if(m===0||m===15)continue;const ax=x+step*(v0/(v0-v1)),ay=y,bx=x+step,by=y+step*(v1/(v1-v2)),cx=x+step*(v3/(v3-v2)),cy=y+step,dx=x,dy=y+step*(v0/(v0-v3));if(m===1||m===14){ctx.moveTo(dx,dy);ctx.lineTo(ax,ay);}else if(m===2||m===13){ctx.moveTo(ax,ay);ctx.lineTo(bx,by);}else if(m===3||m===12){ctx.moveTo(dx,dy);ctx.lineTo(bx,by);}else if(m===4||m===11){ctx.moveTo(bx,by);ctx.lineTo(cx,cy);}else if(m===6||m===9){ctx.moveTo(ax,ay);ctx.lineTo(cx,cy);}else if(m===7||m===8){ctx.moveTo(dx,dy);ctx.lineTo(cx,cy);}}}}ctx.stroke();t+=0.012;requestAnimationFrame(draw);}draw();})();<\/script>` : ''}
 </body>
 </html>`;
         }
@@ -1797,18 +1801,32 @@
             closeImportModal(); renderLinksEditor(); updateLivePreview();
         }
 
-        window.addEventListener('DOMContentLoaded', async () => {
-            renderPublicPage(); 
-            renderLinksEditor(); 
-            populateInputsFromState(); 
-            updateLivePreview();
-            
-            await neonPullState();
-
+        function hideLoadingScreen() {
             const loader = document.getElementById('siteLoadingScreen');
-            if (loader) {
+            if (loader && !loader.dataset.dismissed) {
+                loader.dataset.dismissed = 'true';
                 loader.style.opacity = '0';
                 setTimeout(() => loader.remove(), 300);
+            }
+        }
+
+        // Guaranteed fallback so the loading screen never hangs
+        setTimeout(hideLoadingScreen, 1800);
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                renderPublicPage();
+                renderLinksEditor();
+                populateInputsFromState();
+                updateLivePreview();
+                await Promise.race([
+                    neonPullState(),
+                    new Promise(resolve => setTimeout(resolve, 1400))
+                ]);
+            } catch (e) {
+                console.warn('Init error:', e);
+            } finally {
+                hideLoadingScreen();
             }
         });
     </script>
